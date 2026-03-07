@@ -4,3 +4,144 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --primary-background: #fff;
+  --main-accent: #01b0d3;
+  --primary-text: #242333;
+  --body-font: "Inter", sans-serif;
+  --heading-font: "Literata", serif;
+}
+
+body {
+  font-family: var(--body-font);
+}
+
+h1, h2, h3 {
+  font-size: large;
+  font-family: var(--heading-font);
+}
+
+
+/* header */
+#top-header {
+  font: var(--body-font);
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  
+  /* layout */
+  display: flex;
+  justify-content: space-between;
+}
+
+.siteName a {
+  font-size: 32px;
+  color: var(--primary-text);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+#tools {
+  font-size: 3.5vw;
+  font-variant: small-caps;
+  display: flex;
+  width: 20%;
+  justify-content: space-evenly;
+}
+
+#tools a {
+  color: var(--primary-text);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* navigation */
+nav ul {
+  background-color: var(--primary-text);
+  color: var(--primary-background);
+  padding: 1em;
+  list-style: none;
+
+  /* layout */
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+/* hero */
+#hero {
+  color: var(--main-accent);
+  background-image: url(../images/vehicles/delorean.jpg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+}
+
+#hero h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#hero ul {
+  background-color: #ffffff76;
+  list-style: none;
+  padding-left: 10px;
+}
+
+#hero li {
+    font-size: small;
+}
+
+#hero span {
+  font-weight: 800;
+}
+
+#actionbtn {
+  background-color: var(--main-accent);
+  border: solid 2px var(--primary-text);
+  font-weight: 800;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+#reviews {
+  font-size: small;
+  margin-bottom: 30px;
+}
+
+#reviews  ul {
+  padding-left: 18px;
+}
+
+#reviews li{
+  margin-bottom:15px;
+}
+
+.upgrade-row {
+  gap: 10px;
+  display: flex;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+}
+
+.upgrade-row a{
+  text-align: center;
+  flex: 1;
+  color: var(--primary-text);
+}
+
+.upgrade-item {
+  text-align: center;
+  background-color: var(--main-accent);
+  border: 1px solid var(--primary-text);
+  padding:10px;
+  height: 5.5em;
+}
+
+@media screen and (max-width: 570px) 
+{
+  
+}
