@@ -17,6 +17,13 @@ body {
   font-family: var(--body-font);
 }
 
+#wrapper {
+  background-color: var(--primary-background);
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 10px;
+}
+
 h1, h2, h3 {
   font-size: large;
   font-family: var(--heading-font);
@@ -29,8 +36,6 @@ h1, h2, h3 {
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
-  
-  /* layout */
   display: flex;
   justify-content: space-between;
 }
@@ -62,8 +67,6 @@ nav ul {
   color: var(--primary-background);
   padding: 1em;
   list-style: none;
-
-  /* layout */
   display: flex;
   gap: 10px;
   justify-content: space-between;
@@ -71,11 +74,12 @@ nav ul {
 
 /* hero */
 #hero {
-  color: var(--main-accent);
-  background-image: url(../images/vehicles/delorean.jpg);
+  background-image: url("/images/vehicles/delorean.jpg");
+  background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  background-repeat: no-repeat;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
 }
 
@@ -86,12 +90,13 @@ nav ul {
 
 #hero ul {
   background-color: #ffffff76;
-  list-style: none;
   padding-left: 10px;
 }
 
 #hero li {
-    font-size: small;
+  list-style: none;
+  color: var(--main-accent);
+  font-size: 0.85em;
 }
 
 #hero span {
@@ -141,7 +146,66 @@ nav ul {
   height: 5.5em;
 }
 
-@media screen and (max-width: 570px) 
-{
+@media only screen and (min-width: 45rem) {
+  #wrapper {
+    margin:0 auto;
+    width: 75vw;
+    max-width: 1200px;
+    border: 5px solid var(--main-accent);
+    border-radius: 10px;
+    margin-top: 1rem;
+    padding: 1vw;
+  }
+
+  body {
+    background-image: url("/images/site/checkerboard.jpg");
+    background-size: 400px 400px;
+    background-position: 0 0, 0 0, -50px -50px, 50px 50px;
+  }
+
+
+  #wrapper {
+    border: 5px solid var(--main-accent);
+    border-radius: 10px;
+    margin-top: 1rem;
+    padding: 1vw;
+    width: 75vw;
+    max-width: 1200px;
+  }
+
+  #tools {
+    font-size: inherit;
+  }
   
+  nav {
+    margin-top: 0.75rem;
+  }
+
+  nav ul {
+    justify-content: space-evenly;
+    padding: 0.5rem 0;
+    margin: 0;
+  }
+
+  nav li {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  #hero ul {
+    font-size: 1.6em;
+    margin-left: 2em;
+    margin-top: 1em;
+  }
+
+  #actionbtn {
+    display: block;
+    width: 90%;
+    margin-top: 1.5em;
+    background-color: var(--main-accent);
+    color: var(--primary-text);
+    font-weight: 800;
+    font-size: large;
+  }
 }
