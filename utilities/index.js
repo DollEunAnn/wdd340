@@ -57,6 +57,23 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the Inventory Item view HTML
+* ************************************ */
+Util.buildDetailItemView = async function(data) {
+  let grid
+  if(data.length > 0) {
+    grid = '<div>'
+    grid += '<div>' + data[0].inv_id + '</div>'
+    grid += '<div>' + data[0].inv_model + '</div>'
+    grid += '</div>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
