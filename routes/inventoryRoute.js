@@ -9,4 +9,8 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 // Route to view a detail item
 router.get("/detail/:inventoryId", invController.buildByInventoryId);
 
+// Route error
+router.get("/error",invController.makeError);
+
+
 module.exports = router;
