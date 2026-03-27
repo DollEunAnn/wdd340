@@ -8,4 +8,7 @@ const utilities = require("../utilities")
 router.get("/login", accountController.buildLogin);
 router.get("/register", accountController.buildRegister);
 
+// Saves / Post a Registration
+router.post('/register', accountController.registerAccount);
+
 module.exports = router;
