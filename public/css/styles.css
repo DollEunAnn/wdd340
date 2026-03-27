@@ -262,6 +262,17 @@ button {
   border-radius: 30px;
 }
 
+/* password */
+#pswdBtn {
+  border:2px solid #000;
+  border-radius: 5px;
+  padding: 2px;
+  margin-top: 1em;
+  font-style: small;
+  width: 7em;
+  text-align: center;
+}
+
 @media only screen and (min-width: 45rem) {
    /* inventory classification display */
   #inv-display {

@@ -1,0 +1,38 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <!-- Login Form -->
+            <div class="container">
+                <div>
+                    <form method="POST">
+                        <div class="formItem">
+                            <label for="account_firstname">First name:</label>
+                            <input type="text" name="account_firstname" id="account_firstname" required>
+                        </div>
+                        <div class="formItem">
+                            <label for="account_lastname">Last name:</label>
+                            <input type="text" name="account_lastname" id="account_lastname" required>
+                        </div>
+                        <div class="formItem">
+                            <label for="account_email">Email:</label>
+                            <input type="text" name="account_email" id="account_email" required>
+                        </div>
+                        <!-- 12 char, 1 capital, 1 number, 1 special char -->
+                        <div class="formItem">
+                            <label for="account_password">Password:</label>
+                            <input type="password" name="account_password" id="pword" required>
+                            <span id="pswdBtn">Show Password</span>
+                        </div>
+
+                        <div class="formButton">
+                            <button type="submit">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>

@@ -6,5 +6,6 @@ const utilities = require("../utilities")
 
 // Index 
 router.get("/login", accountController.buildLogin);
+router.get("/register", accountController.buildRegister);
 
 module.exports = router;
