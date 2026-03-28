@@ -10,11 +10,11 @@
             <!-- Login Form -->
             <div class="container">
                 <div id="loginForm">
-                    <form method="POST">
+                    <form id="loginForm" action="/account/login" method="post">
                         <div class="formItem">
                             <label for="account_email">Email:</label>
                             <input type="email" name="account_email" id="account_email" required
-                                placeholder="Enter a valid email address">
+                                value="<%= locals.account_email %>" placeholder=" Enter a valid email address">
                         </div>
 
                         <div class="formItem">
