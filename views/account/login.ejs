@@ -8,27 +8,25 @@
         <%- messages() %>
 
             <!-- Login Form -->
-            <div class="container">
-                <div id="loginForm">
-                    <form id="loginForm" action="/account/login" method="post">
-                        <div class="formItem">
-                            <label for="account_email">Email:</label>
-                            <input type="email" name="account_email" id="account_email" required
-                                value="<%= locals.account_email %>" placeholder=" Enter a valid email address">
-                        </div>
+            <div>
+                <form id="loginForm" action="/account/login" method="post">
+                    <div class="formItem">
+                        <label for="account_email">Email:</label>
+                        <input type="email" name="account_email" id="account_email" required
+                            value="<%= locals.account_email %>" placeholder=" Enter a valid email address">
+                    </div>
 
-                        <div class="formItem">
-                            <label for="account_password">Password:</label>
-                            <input type="password" name="account_password" id="account_password" required>
-                        </div>
+                    <div class="formItem">
+                        <label for="account_password">Password:</label>
+                        <input type="password" name="account_password" id="account_password" required>
+                    </div>
 
-                        <div class="formButton">
-                            <button type="submit">LOGIN</button>
-                            <!-- Register Link -->
-                            <p>
-                                Don't have an account?
-                                <a href="/account/register">Sign-up</a>
-                            </p>
-                    </form>
-                </div>
+                    <div class="formButton">
+                        <button type="submit">LOGIN</button>
+                        <!-- Register Link -->
+                        <p>
+                            Don't have an account?
+                            <a href="/account/register">Sign-up</a>
+                        </p>
+                </form>
             </div>
