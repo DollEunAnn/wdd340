@@ -1,0 +1,17 @@
+<!-- Inventory Management - heading, message, inventory -->
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <div class="container">
+                <!-- add new classification -->
+                <a href="/inv/add-classification">Add Classification</a>
+
+                <!-- add new inventory item -->
+                <a href="/inv/add-inventory-item">Add Inventory Item</a>
+            </div>

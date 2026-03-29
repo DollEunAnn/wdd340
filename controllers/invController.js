@@ -4,6 +4,59 @@ const utilities = require("../utilities/")
 const invCont = {}
 
 /* ***************************
+ *  Build inventory management view
+ * ************************** */
+invCont.buildManagementView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/management", {
+    title: "Vehicle Management",
+    nav,
+  })
+}
+
+// View add classification
+invCont.buildAddClassificationView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/add-classification", {
+    title: "Add New Classification",
+    nav,
+  })
+}
+
+// Process add classification
+invCont.addClassification = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+
+  const regResult = await invModel.addClassification(classification_name)
+
+  if (regResult) {
+    req.flash("notice", "Classification added successfully.")
+    res.status(201).render("./inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+    })
+  } else {
+    req.flash("error", "Failed to add classification.")
+    res.status(500).render("./inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+    })
+  }
+}
+
+
+// View add inventory item
+invCont.buildAddInventoryItemView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/add-inventory-item", {  
+    title: "Add New Inventory Item",
+    nav,
+  })
+}
+
+
+/* ***************************
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {

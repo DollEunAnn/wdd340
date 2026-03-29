@@ -1,0 +1,28 @@
+<!-- heading -->
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+
+            <div class="container">
+                hello world
+                <!-- <div class="borderBox">
+                    <p class="textItalic">FIELD IS REQUIRED.</p>
+                    <h2>Classification Name</h2>
+
+                    <p class="textItalic">NAME MUST BE ALPHABETIC CHARACTERS ONLY.</p>
+                    <form action="/inv/add-inventory-item" method="POST">
+                        <div class="formItem">
+                            <input type="text" name="classification_name" id="classification_name" required>
+                        </div>
+                        <div class="formButton">
+                            <button type="submit">Add Classification</button>
+                        </div>
+                    </form>
+                </div> -->
+            </div>
