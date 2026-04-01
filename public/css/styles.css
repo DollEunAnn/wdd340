@@ -224,7 +224,113 @@ footer {
   padding:2em 0;
 }
 
+/* Login View */
+#loginForm {
+  max-width: 400px;
+  padding: 2em;
+  background-color: var(--primary-text);
+  color: #fff;
+  border:#fff solid 2px; 
+  margin: auto 2em;
+}
+
+#loginForm p > a {
+  text-align: center;
+  color: #fff;
+}
+
+
+.formItem  {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.formButton{
+  margin-top: 10px;
+  text-align: center;
+}
+
+input {
+  border-radius: 10px;
+  height: 35px;
+}
+
+button {
+  padding: 10px 25px;
+  border-radius: 30px;
+}
+
+/* password */
+#pswdBtn {
+  border:2px solid #000;
+  border-radius: 5px;
+  padding: 2px;
+  margin-top: 1em;
+  width: 7em;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 1em;
+}
+
+select {
+  border-radius: 10px;
+  height: 35px;
+}
+
+.borderBox {
+  max-width: 400px;
+  border: var(--border) solid 0.5px;
+  background-color: var(--main-accent);
+  border-radius: 10px;
+  padding: 1em;
+  margin:0 auto;
+}
+
+.textItalic {
+  font-style: italic;
+}
+
+.notice {
+  /* color: red; */
+  font-style: italic;
+}
+
+/* Focus + invalid */
+input:focus:invalid {
+  background-color: #ffe6e6;
+}
+
+/* Focus + valid */
+input:focus:valid {
+  background-color: #e6ffe6;
+}
+
+
+/* Focus + invalid */
+textarea:focus:invalid {
+  background-color: #ffe6e6;
+}
+
+/* Focus + valid */
+textarea:focus:valid {
+  background-color: #e6ffe6;
+}
+
+textarea {
+  min-height: 200px;
+}
+
 @media only screen and (min-width: 45rem) {
+  .borderBox {
+    min-width: 500px;
+  }
    /* inventory classification display */
   #inv-display {
     padding:1rem 3rem;
