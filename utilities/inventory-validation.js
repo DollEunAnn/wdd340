@@ -63,17 +63,14 @@ validate.inventoryItemRules = () => {
         .withMessage("Description must be at least 10 characters long."),
       body("inv_image")
         .trim()
-        .escape()
         .notEmpty()
         .withMessage("Image path is required."),
       body("inv_thumbnail")
         .trim()
-        .escape()
         .notEmpty()
         .withMessage("Thumbnail path is required."),
       body("inv_price")
         .trim()
-        .escape()
         .notEmpty()
         .isFloat({ min: 0 })
         .withMessage("Please provide a valid price."),
