@@ -281,7 +281,7 @@ button {
 }
 
 .borderBox {
-  max-width: 500px;
+  min-width: 500px;
   border: var(--border) solid 0.5px;
   background-color: var(--main-accent);
   border-radius: 10px;
@@ -293,7 +293,36 @@ button {
   font-style: italic;
 }
 
+.notice {
+  /* color: red; */
+  font-style: italic;
+}
+
+/* Focus + invalid */
+input:focus:invalid {
+  background-color: #ffe6e6;
+}
+
+/* Focus + valid */
+input:focus:valid {
+  background-color: #e6ffe6;
+}
+
+
+/* Focus + invalid */
+textarea:focus:invalid {
+  background-color: #ffe6e6;
+}
+
+/* Focus + valid */
+textarea:focus:valid {
+  background-color: #e6ffe6;
+}
+
 @media only screen and (min-width: 45rem) {
+  .borderBox {
+    min-width: 500px;
+  }
    /* inventory classification display */
   #inv-display {
     padding:1rem 3rem;
@@ -302,6 +331,10 @@ button {
     justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 10px;
+  }
+
+  textarea {
+    min-height: 100px;
   }
 
   .card {

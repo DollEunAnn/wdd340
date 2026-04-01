@@ -21,8 +21,13 @@ router.post("/add-classification",
     regValidate.checkClassificationData,
     invController.addClassification);
 
-// Route to build add inventory item view
+// Inventory Item
 router.get("/add-inventory-item", invController.buildAddInventoryItemView);
+
+router.post("/add-inventory-item",
+    regValidate.inventoryItemRules(),
+    regValidate.checkInventoryItemData,
+    invController.addInventoryItem);
 
 // Route error
 router.get("/error",invController.makeError);

@@ -1,3 +1,4 @@
+const e = require("connect-flash")
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
 
@@ -40,8 +41,9 @@ invCont.addClassification = async function (req, res, next) {
     })
   } else {
     let nav = await utilities.getNav()
-    req.flash("error", "Failed to add classification.")
+    req.flash("notice", "Failed to add classification.")
     res.status(500).render("./inventory/add-classification", {
+      errors:errors,
       title: "Add New Classification",
       nav,
     })
@@ -52,10 +54,40 @@ invCont.addClassification = async function (req, res, next) {
 // View add inventory item
 invCont.buildAddInventoryItemView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  res.render("./inventory/add-inventory-item", {  
+  let classification_id = null;
+  let classificationList = await utilities.buildClassificationList(classification_id)
+  res.render("./inventory/add-inventory-item", { 
+    errors: null, 
     title: "Add New Inventory Item",
     nav,
+    classificationList,
+    classification_id,
   })
+}
+
+// Process add inventory item
+invCont.addInventoryItem = async function (req, res, next) {
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+  
+  const regResult = await invModel.addInventoryItem(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id);
+
+  if (regResult) {
+    let nav = await utilities.getNav()
+    req.flash("notice", `The ${inv_make} ${inv_model} was added successfully.`)
+    res.status(201).render("./inventory/management", { //redirect to management view after successful addition
+      errors:null,
+      title: "Add New Inventory Item",
+      nav,
+    })
+  } else {
+    let nav = await utilities.getNav()
+    req.flash("notice", "Failed to add inventory item.")
+    res.status(500).render("./inventory/add-inventory-item", {
+      errors: null,
+      title: "Add New Inventory Item",
+      nav,
+      })
+  }
 }
 
 
