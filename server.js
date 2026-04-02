@@ -9,6 +9,7 @@ const pool = require('./database/')
 /* ***********************
  * Require Statements
  *************************/
+const cookieParser = require("cookie-parser")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
@@ -45,6 +46,11 @@ app.use(function(req, res, next){
 // Passing data
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+// Cookie Parser Middleware
+app.use(cookieParser())
+
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
