@@ -6,7 +6,7 @@ const accountController = require("../controllers/accountController")
 const utilities = require("../utilities")
 
 // Default Route
-router.get("/", accountController.buildManagement);
+router.get("/", utilities.checkLogin, accountController.buildManagement);
 
 // Index 
 router.get("/login", accountController.buildLogin);

@@ -150,4 +150,17 @@ Util.checkJWTToken = (req, res, next) => {
  }
 }
 
+/* ****************************************
+ *  Check Login
+ *  To check if the user is logged in before allowing access to certain routes
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
 module.exports = Util
