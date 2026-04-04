@@ -1,0 +1,91 @@
+<!-- heading -->
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+
+                    <div class="container">
+                        <div class="borderBox">
+                            <p class="textItalic">ALL FIELDS IS REQUIRED.</p>
+                            <h2>Classification Name</h2>
+                            <form action="/inv/update" method="post" id="updateForm">
+                                <div class="formItem">
+                                    <label for="classificationList">Classification</label>
+                                    <!-- dropdown for existing classifications -->
+                                    <%- classificationList %>
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_make">Make</label>
+                                    <input type="text" id="inv_make" name="inv_make" required pattern="[A-Za-z\s]{3,}"
+                                        placeholder="Min of 3 characters." value="<%= locals.inv_make %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_model">Model</label>
+                                    <input type="text" id="inv_model" name="inv_model" required
+                                        pattern="[A-Za-z0-9\s]{3,}" placeholder="Min of 3 characters."
+                                        value="<%= locals.inv_model %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_description">Description</label>
+                                    <textarea id="inv_description" name="inv_description" required minlength="10"><%=
+                                        locals.inv_description %></textarea>
+                                </div>
+                                <div class=" formItem">
+                                    <label for="inv_image">Image Path</label>
+                                    <input type="text" id="inv_image" name="inv_image" required
+                                        placeholder="Enter image path" value="<%= locals.inv_image %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_thumbnail">Thumbnail Path</label>
+                                    <input type="text" id="inv_thumbnail" name="inv_thumbnail" required
+                                        placeholder="Enter image path" value="<%= locals.inv_thumbnail %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_price">Price</label>
+                                    <input type="number" id="inv_price" name="inv_price" required min="0" step="0.01"
+                                        placeholder="Decimal or integer" value="<%= locals.inv_price %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_year">Year</label>
+                                    <input type="number" id="inv_year" name="inv_year" required
+                                        placeholder="4-digit year" value="<%= locals.inv_year %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_miles">Miles</label>
+                                    <input type="number" id="inv_miles" name="inv_miles" required min="0"
+                                        placeholder="Digits only" value="<%= locals.inv_miles %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_color">Color</label>
+                                    <input type="text" id="inv_color" name="inv_color" required pattern="[A-Za-z\s]+"
+                                        placeholder="Min of 3 characters." value="<%= locals.inv_color %>">
+                                </div>
+
+
+                                <div class="formButton">
+                                    <button type="submit" disabled>Update Vehicle</button>
+                                </div>
+
+                                <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>
+                                    "
+                                    <% } %>>
+                            </form>
+                        </div>
+                    </div>
+
+                    <script src="../../js/inventory.js"></script>
