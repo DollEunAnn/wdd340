@@ -43,6 +43,11 @@ router.post("/update/",
     regValidate.checkUpdateData,
     invController.updateInventoryItem);
 
+// View delete inventory item
+router.get("/delete/:inventoryId", invController.buildDeleteInventoryItemView);
+router.post("/delete", invController.deleteInventoryItem);
+
+
 // Route error
 router.get("/error",invController.makeError);
 
