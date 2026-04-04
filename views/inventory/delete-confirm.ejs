@@ -1,0 +1,57 @@
+<!-- heading -->
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+
+                    <div class="container">
+                        <div class="borderBox">
+                            <p>Confirm Deletion - The delete is permanent.</p>
+                            <form action="/inv/delete" method="post">
+                                <div class="formItem">
+                                    <label for="inv_make">Make</label>
+                                    <input readonly type="text" id="inv_make" name="inv_make" required
+                                        pattern="[A-Za-z\s]{3,}" placeholder="Min of 3 characters."
+                                        value="<%= locals.inv_make %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_model">Model</label>
+                                    <input readonly type="text" id="inv_model" name="inv_model" required
+                                        pattern="[A-Za-z0-9\s]{3,}" placeholder="Min of 3 characters."
+                                        value="<%= locals.inv_model %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_price">Price</label>
+                                    <input readonly type="number" id="inv_price" name="inv_price" required min="0"
+                                        step="0.01" placeholder="Decimal or integer" value="<%= locals.inv_price %>">
+                                </div>
+                                <div class="formItem">
+                                    <label for="inv_year">Year</label>
+                                    <input readonly type="number" id="inv_year" name="inv_year" required
+                                        placeholder="4-digit year" value="<%= locals.inv_year %>">
+                                </div>
+                                <div class="formButton">
+                                    <button type="submit">Delete Vehicle</button>
+                                </div>
+
+                                <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>
+                                    "
+                                    <% } %>>
+                            </form>
+                        </div>
+                    </div>
