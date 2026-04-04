@@ -9,9 +9,14 @@ const invCont = {}
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   let nav = await utilities.getNav()
+
+  // store results of select list
+  const classificationSelect = await utilities.buildClassificationList()
+
   res.render("./inventory/management", {
     title: "Vehicle Management",
     nav,
+    classificationSelect,
   })
 }
 
@@ -129,6 +134,121 @@ invCont.buildByInventoryId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+
+  // changing the logic
+  // if (invData[0].inv_id) {
+  //   return res.json(invData)
+  // } else {
+  //   next(new Error("No data returned"))
+  // }
+
+  if (invData.length > 0) {
+    return res.json(invData)
+  } else {
+    req.flash("notice", "No data found")
+    return res.redirect("/inventory")
+  }
+}
+
+/** ***************************
+ * Build edit inventory item view
+ * ****************************** */
+invCont.buildEditInventoryItemView = async function (req, res, next) {
+  const inventory_id = parseInt(req.params.inventoryId) // get inventory id from route
+  let nav = await utilities.getNav()
+  const data = await invModel.getInventoryItemByInventoryId(inventory_id)
+  const itemData = data[0] // get the first item from the data array
+  const classificationList = await utilities.buildClassificationList(itemData.classification_id)
+  const name = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/edit-inventory-item", { 
+    errors: null, 
+    title: `Edit ${name}`,
+    nav,
+    classificationList : classificationList,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+    classification_id: itemData.classification_id
+  })
+}
+
+/** ***************************
+ * Saves update of inventory item
+ * ****************************** */
+invCont.updateInventoryItem = async function (req, res, next) {
+  const { 
+    inv_id, 
+    inv_make, 
+    inv_model, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_year, 
+    inv_miles, 
+    inv_color, 
+    classification_id } = req.body
+  
+  const updateResult = await invModel.updateInventory(
+    inv_id, 
+    inv_make,
+    inv_model, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_year, 
+    inv_miles, 
+    inv_color, 
+    classification_id);
+
+  if (updateResult) {
+    let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()    
+    req.flash("notice", `The ${inv_make} ${inv_model} was updated successfully.`)
+    res.status(201).render("./inventory/management", { //redirect to management view after successful update
+      errors:null,
+      title: `Inventory Management`,
+      nav,
+      classificationSelect,
+    })
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    let nav = await utilities.getNav()
+    req.flash("notice", "Failed to update inventory item.")
+    res.status(501).render("./inventory/edit-inventory-item", {
+    errors: null,
+    title: `Edit ${itemName}`,
+    nav,
+    classificationList: classificationSelect,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_year,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+    })
+  }
+}
 
 /* ***************************
  *  Make Error
