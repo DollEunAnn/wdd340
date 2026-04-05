@@ -163,4 +163,35 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+/* ****************************************
+*  Check authorization
+* *************************************** */
+Util.checkAuthorization = (req, res, next) => {
+  const token = req.cookies.jwt
+
+    // Check if the token exists
+  if (!token) {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+
+  // Verify the token and get the account type
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+
+    res.locals.accountData = decoded
+    res.locals.loggedin = 1
+
+    if(decoded.account_type === "Admin" || decoded.account_type === "Employee") {
+      return next()
+    } else {
+      req.flash("notice", "You are not authorized to view this page.")
+      return res.redirect("/account/login")
+    }
+  } catch (error) {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+
 module.exports = Util
