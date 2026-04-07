@@ -5,20 +5,41 @@
     <% } else { res.redirect('/') } %>
 
         <!-- message -->
-        <% messages() %>
+        <%- messages() %>
 
 
             <% if (errors) { %>
                 <ul class="notice">
                     <% errors.array().forEach(error=> { %>
                         <li>
-                            <%= error.msg %>
+                            <% error.msg %>
                         </li>
                         <% }) %>
                 </ul>
                 <% } %>
 
+                    <h2>
+                        Welcome <%= locals.accountData.account_firstname %> !
+                    </h2>
 
-                    <div>
-                        <p>Account management page coming soon!</p>
-                    </div>
+                    <!-- Update Account Link (FOR ALL USERS) -->
+                    <p>
+                        <a href="/account/update/<%= locals.accountData.account_id %>">
+                            Update Account Information
+                        </a>
+                    </p>
+
+                    <% if ( locals.accountData.account_type==="Employee" || locals.accountData.account_type==="Admin" )
+                        { %>
+                        <div class="borderBox">
+
+                            <h3>Inventory Management</h3>
+
+                            <p>
+                                <a href="/inv/">
+                                    Manage Inventory
+                                </a>
+                            </p>
+                        </div>
+
+                        <% } %>
