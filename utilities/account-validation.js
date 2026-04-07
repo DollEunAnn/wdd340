@@ -202,5 +202,25 @@ validate.checkAccountUpdateData = async (req, res, next) => {
   next()
 }
 
+/* ******************************
+ * Update Password Validation Rules
+ * ***************************** */
+validate.accountPasswordUpdateRules = () => {
+  return [
+     // password is required and must be strong password
+      body("account_password")
+        .trim()
+        .notEmpty()
+        .isStrongPassword({
+          minLength: 12,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        })
+        .withMessage("Password does not meet requirements."),
+  ]
+}
+
 module.exports = validate
 

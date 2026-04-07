@@ -27,11 +27,14 @@ router.post(
   accountController.accountLogin
 )
 
-router.get("/logout", (req, res) => {
-  res.clearCookie("jwt")
-  req.flash("notice", "You have been logged out.")
-  res.redirect("/account/login")
-})
+// router.get("/logout", (req, res) => {
+//   res.clearCookie("jwt")
+//   req.flash("notice", "You have been logged out.")
+//   res.redirect("/account/login")
+// })
+
+// Logout
+router.get("/logout", accountController.accountLogout);
 
 // Update account details view
 router.get("/update/:accountId", accountController.buildUpdateAccountView);
@@ -43,6 +46,6 @@ router.post("/update-details",
   accountController.updateAccountDetails);
 
 // Update account password
-// router.post("/update-password", accountController.updateAccountPassword);
+router.post("/update-password", accountController.updateAccountPassword);
 
 module.exports = router;

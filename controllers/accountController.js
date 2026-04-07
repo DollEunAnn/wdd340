@@ -20,7 +20,6 @@ async function buildManagement(req, res, next) {
   })
 }
 
-
 /* ****************************************
 *  Deliver login view
 * *************************************** */
@@ -142,8 +141,6 @@ async function buildUpdateAccountView(req, res, next) {
   let nav = await utilities.getNav()
   const account_id = parseInt(req.params.accountId)
   const accountData = await accountModel.getAccountById(account_id)
-
-  console.log(accountData)
   
   if (!accountData) {
     req.flash("notice", "Sorry, we couldn't find the account.")
@@ -193,5 +190,63 @@ async function updateAccountDetails(req, res) {
   }
 }
 
+/* ****************************************
+*  Update Password
+* *************************************** */
+async function updateAccountPassword(req, res) {
+  const { account_password, account_id } = req.body
+  let nav = await utilities.getNav()  
+  
+  let hashedPassword
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateAccountView, updateAccountDetails }
+  try {
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", "Sorry, there was an error processing the password update.")
+    res.status(500).render("account/update/", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+    })
+  }
+
+  const updateResult = await accountModel.updateAccountPassword(hashedPassword, account_id)
+
+  if (updateResult.rowCount > 0) {
+
+    req.flash("notice", "Password updated successfully.")
+    res.status(201).render("./account/management", {
+      errors: null,
+      title: "Account Manageement",
+      nav,
+    })
+  } else {
+
+    req.flash("notice", "Sorry, there was an error updating the password.")
+    res.status(501).render("/account/update/",{
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+    })
+  }
+}
+
+/* ****************************************
+*  Logout
+* *************************************** */
+async function accountLogout(req, res) {
+  let nav = await utilities.getNav()  
+  // delete the JWT cookie to log the user out
+  res.clearCookie("jwt")
+
+  //destroy the session to clear all session data
+  req.session.destroy()
+
+  // returns to the home page
+  res.redirect("/")
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateAccountView, updateAccountDetails, updateAccountPassword, accountLogout }
