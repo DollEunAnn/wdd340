@@ -33,4 +33,16 @@ router.get("/logout", (req, res) => {
   res.redirect("/account/login")
 })
 
+// Update account details view
+router.get("/update/:accountId", accountController.buildUpdateAccountView);
+
+// Update account details
+router.post("/update-details", 
+  regValidate.accountUpdateRules(),
+  regValidate.checkAccountUpdateData,
+  accountController.updateAccountDetails);
+
+// Update account password
+// router.post("/update-password", accountController.updateAccountPassword);
+
 module.exports = router;

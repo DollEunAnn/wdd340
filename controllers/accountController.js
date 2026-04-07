@@ -135,4 +135,63 @@ async function registerAccount(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement }
+/* ****************************************
+*  Deliver update account view
+* *************************************** */
+async function buildUpdateAccountView(req, res, next) {
+  let nav = await utilities.getNav()
+  const account_id = parseInt(req.params.accountId)
+  const accountData = await accountModel.getAccountById(account_id)
+
+  console.log(accountData)
+  
+  if (!accountData) {
+    req.flash("notice", "Sorry, we couldn't find the account.")
+    return res.redirect("/account/")
+  }
+  
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    errors: null,
+    account_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+  })
+}
+
+/* ****************************************
+*  Update Account details
+* *************************************** */
+async function updateAccountDetails(req, res) {
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  let nav = await utilities.getNav()
+
+  const updateResult = await accountModel.updateAccountDetails(account_firstname, account_lastname, account_email, account_id)
+
+  if (updateResult.rowCount > 0) {
+
+    req.flash("notice", "Account details updated successfully.")
+    res.status(201).render("./account/management", {
+      errors: null,
+      title: "Account Manageement",
+      nav,
+    })
+  } else {
+
+    req.flash("notice", "Sorry, there was an error updating the account details.")
+    res.status(501).render("/account/update/",{
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+  }
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateAccountView, updateAccountDetails }
