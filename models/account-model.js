@@ -5,7 +5,7 @@ const pool = require("../database/")
 * *************************** */
 async function registerAccount(account_firstname, account_lastname, account_email, account_password){
   try {
-    const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *"
+    const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, role_id) VALUES ($1, $2, $3, $4, '1') RETURNING *"
     return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password])
   } catch (error) {
     return error.message
@@ -31,7 +31,7 @@ async function checkExistingEmail(account_email){
 async function getAccountByEmail (account_email) {
   try {
     const result = await pool.query(
-      'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
+      'SELECT account_id, account_firstname, account_lastname, account_email, role_id, account_password FROM account WHERE account_email = $1',
       [account_email])
     return result.rows[0]
   } catch (error) {
@@ -44,7 +44,7 @@ async function getAccountByEmail (account_email) {
 * ***************************** */
 async function getAccountById (account_id) {
   try {
-    const result = await pool.query('SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account WHERE account_id = $1', [account_id])
+    const result = await pool.query('SELECT account_id, account_firstname, account_lastname, account_email, role_id FROM account WHERE account_id = $1', [account_id])
     return result.rows[0]
   }
   catch (error) {
@@ -89,4 +89,44 @@ async function getAccountByEmail(account_email) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountDetails, updateAccountPassword }
+/**
+ * Get all the accounts in the database
+ */
+async function getAllUsers() {
+  try {
+    const sql = `SELECT 
+        a.account_id,
+        a.account_firstname,
+        a.account_lastname,
+        a.account_email,
+        r.role_name
+      FROM account a
+      JOIN role r ON a.role_id = r.role_id`
+    const result = await pool.query(sql)
+    return result.rows
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* *****************************
+* Get all roles in the database
+* ***************************** */
+async function getAllRoles() {
+  return await pool.query("SELECT * FROM role ORDER BY role_id")
+}
+
+
+/***********************
+ * Update the role
+ **********************/
+async function updateRole(account_id, role_id) {
+   try {
+    const sql = "UPDATE account SET role_id = $1 WHERE account_id = $2 RETURNING *"
+    return await pool.query(sql, [role_id, account_id])
+  } catch (error) {
+    return error.message
+  }
+}
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountDetails, updateAccountPassword, getAllUsers, getAllRoles, updateRole }

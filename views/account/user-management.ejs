@@ -1,0 +1,64 @@
+<div class="breadCrumb">
+    <a href="/inv">Inventory Management</a>
+    <a href="/account">Account Management</a>
+</div>
+
+
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+
+                    <h2>User Roles</h2>
+
+                    <% if (users && users.length> 0) { %>
+                        <table class="stripedTable">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% users.forEach(user=> { %>
+                                    <tr>
+
+                                        <td>
+                                            <%= user.account_firstname %>
+                                                <%= user.account_lastname %>
+                                        </td>
+                                        <td>
+                                            <%= user.account_email %>
+                                        </td>
+                                        <td>
+                                            <%= user.role_name %>
+                                        </td>
+                                        <td>
+                                            <a href="/account/update-role/<%= user.account_id %>">
+                                                Update Role
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                            <p>No users found.</p>
+                            <% } %>

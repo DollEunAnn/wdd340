@@ -48,4 +48,22 @@ router.post("/update-details",
 // Update account password
 router.post("/update-password", accountController.updateAccountPassword);
 
+
+/**
+ * User management view for admin accounts
+ */
+router.get("/user-management", 
+  utilities.checkLogin, 
+  utilities.checkAdmin, 
+  accountController.buildUserManagementView);
+
+router.get("/update-role/:accountId",
+  utilities.checkLogin,
+  utilities.checkAdmin,
+  accountController.buildUpdateRoleView);
+
+router.post("/update-role",
+  utilities.checkAdmin,
+  accountController.updateRole);
+
 module.exports = router;

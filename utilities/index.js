@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -163,6 +164,18 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+ /*************************************
+  * Check if the user is an admin
+  * 
+  ************************************/
+ Util.checkAdmin = (req, res, next) => {
+  if (res.locals.accountData.role_id === 3) {
+    next() 
+  } else {
+    req.flash("notice", "You are not authorized to view this page.")
+    return res.redirect("/account/login")
+  }}
+
 /* ****************************************
 *  Check authorization
 * *************************************** */
@@ -182,7 +195,7 @@ Util.checkAuthorization = (req, res, next) => {
     res.locals.accountData = decoded
     res.locals.loggedin = 1
 
-    if(decoded.account_type === "Admin" || decoded.account_type === "Employee") {
+    if(decoded.role_id === 3|| decoded.role_id === 2) {
       return next()
     } else {
       req.flash("notice", "You are not authorized to view this page.")
@@ -192,6 +205,35 @@ Util.checkAuthorization = (req, res, next) => {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
+}
+
+/**
+ * Build role options for the update account type view
+ */
+Util.buildRoleList = async function (role_id = null) {
+  let data = await accountModel.getAllRoles()
+
+  let roleList =
+    '<select name="role_id" id="roleList" required>'
+  
+  roleList += "<option value=''>Choose a Classification</option>"
+
+  data.rows.forEach((row) => {
+    roleList += `<option value="${row.role_id}"`
+
+    if (
+      role_id != null &&
+      row.role_id == role_id
+    ) {
+      roleList += " selected"
+    }
+
+    roleList += `>${row.role_name}</option>`
+  })
+
+  roleList += "</select>"
+
+  return roleList
 }
 
 module.exports = Util
