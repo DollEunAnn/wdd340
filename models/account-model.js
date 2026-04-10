@@ -113,7 +113,8 @@ async function getAllUsers() {
 * Get all roles in the database
 * ***************************** */
 async function getAllRoles() {
-  return await pool.query("SELECT * FROM role ORDER BY role_id")
+  const data = await pool.query("SELECT * FROM role ORDER BY role_id")
+  return data.rows
 }
 
 
@@ -129,4 +130,31 @@ async function updateRole(account_id, role_id) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountDetails, updateAccountPassword, getAllUsers, getAllRoles, updateRole }
+/***********************
+ * Check if the role - not case sensitive
+ **********************/
+async function checkExistingRole(role_name) {
+  try {
+    const sql = `
+      SELECT * 
+      FROM role 
+      WHERE LOWER(role_name) = LOWER($1)
+    `
+    const result = await pool.query(sql, [role_name])
+
+    return result.rows[0] // returns existing role or undefined
+  } catch (error) {
+    return error.message
+  }
+}
+
+async function addRole(role_name) {
+  try {
+    const sql = "INSERT INTO public.role (role_name) VALUES ($1) RETURNING *"
+    return await pool.query(sql, [role_name])
+  } catch (error) {
+    return error.message
+  }
+}
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountDetails, updateAccountPassword, getAllUsers, getAllRoles, updateRole, checkExistingRole, addRole }

@@ -218,7 +218,7 @@ Util.buildRoleList = async function (role_id = null) {
   
   roleList += "<option value=''>Choose a Classification</option>"
 
-  data.rows.forEach((row) => {
+  data.forEach((row) => {
     roleList += `<option value="${row.role_id}"`
 
     if (

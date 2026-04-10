@@ -7,7 +7,6 @@
     </h1>
     <% } else { res.redirect('/') } %>
 
-
         <!-- message -->
         <%- messages() %>
 
@@ -22,32 +21,30 @@
                 <% } %>
 
 
-                    <% if (users && users.length> 0) { %>
+                    <h2>User Roles</h2>
+                    <a href="/account/add-role">Add New</a>
+
+                    <% if (roles && roles.length> 0) { %>
                         <table class="stripedTable">
                             <thead>
                                 <tr>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
+                                    <th>Role Id</th>
+                                    <th>Role Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% users.forEach(user=> { %>
+                                <% roles.forEach(role=> { %>
                                     <tr>
 
                                         <td>
-                                            <%= user.account_firstname %>
-                                                <%= user.account_lastname %>
+                                            <%= role.role_id %>
                                         </td>
                                         <td>
-                                            <%= user.account_email %>
+                                            <%= role.role_name %>
                                         </td>
                                         <td>
-                                            <%= user.role_name %>
-                                        </td>
-                                        <td>
-                                            <a href="/account/update-user-role/<%= user.account_id %>">
+                                            <a href="/account/update-user-role/<%= role.account_id %>">
                                                 Update Role
                                             </a>
                                         </td>
@@ -56,5 +53,5 @@
                             </tbody>
                         </table>
                         <% } else { %>
-                            <p>No users found.</p>
+                            <p>No roles found.</p>
                             <% } %>

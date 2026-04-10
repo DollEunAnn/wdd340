@@ -1,0 +1,38 @@
+<!-- heading -->
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+
+                    <div class="container">
+                        <div class="borderBox">
+                            <p class="textItalic">FIELD IS REQUIRED.</p>
+                            <h2>Role Name</h2>
+
+                            <p class="textItalic">NAME MUST BE ALPHABETIC CHARACTERS ONLY.</p>
+                            <form action="/account/add-role" method="POST">
+                                <div class="formItem">
+                                    <input type="text" name="role_name" id="role_name" required
+                                        value="<%= locals.role_name %>">
+                                </div>
+                                <div class="formButton">
+                                    <button type="submit">Add Role</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>

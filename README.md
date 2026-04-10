@@ -52,11 +52,19 @@ When you installed Git and cloned the remote repository in week 1, you should ha
 
 ## Changes made
 
-- Create a new module for the admin to edit accounts and update the role (formerly as account_type)
-- Create a view to display all accounts - User Management View.
-- Create a view to update the role type of the user.
+1. Role Module - Applied to Account Module
+
+- Created a new module for the admin to edit accounts and update the role (formerly as account_type)
+- Created a view to display all accounts - User Management View.
+- Created a view to update the role type of the user.
 - Updated all the update and registration that includes account type to role_id
 - Added new functions to accountController
 - Added new functions to account-model
 - Added new roleList dropdown build in utilities
--
+
+2. Role Module
+
+- Created new 'role' table and add relationship with 'account' table in the database
+- Created new view, controller, and model to handle CRUD operations (except delete)
+- Created new validation js for role type
+- Created new views for CRUD operations (except delete)
