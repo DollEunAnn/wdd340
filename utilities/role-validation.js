@@ -1,5 +1,6 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
+const accountModel = require("../models/account-model")
 const validate = {}
 
 validate.roleRules = () => {
@@ -8,9 +9,17 @@ validate.roleRules = () => {
       .trim()
       .notEmpty().withMessage("Cannot save empty")
       .isLength({ min: 3 }).withMessage("Minimum of 3 characters.")
-      .matches(/^[A-Za-z\s'-]+$/)
+      .matches(/^[A-Za-z\s'-]+$/).withMessage("Please type a valid role name")
       .escape()
-      .withMessage("Please type a valid role name"),
+      .custom(async (role_name) => {
+        const existingRole = await accountModel.getRoleByName(role_name)
+
+        if (existingRole) {
+          throw new Error("Role already exists")
+        }
+
+        return true
+      })
     ]
 }
 

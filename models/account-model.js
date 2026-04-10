@@ -89,6 +89,16 @@ async function getAccountByEmail(account_email) {
   }
 }
 
+async function getRoleByName(role_name) {
+  try {
+    const sql = "SELECT * FROM role WHERE LOWER(role_name) = LOWER($1)";
+    const result = await pool.query(sql, [role_name])
+    return result.rows[0]
+  } catch (error) {
+    return error.message
+  }
+}
+
 /**
  * Get all the accounts in the database
  */
@@ -157,4 +167,4 @@ async function addRole(role_name) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountDetails, updateAccountPassword, getAllUsers, getAllRoles, updateRole, checkExistingRole, addRole }
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountDetails, updateAccountPassword, getAllUsers, getAllRoles, updateRole, checkExistingRole, addRole, getRoleByName }
