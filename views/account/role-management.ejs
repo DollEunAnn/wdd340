@@ -1,0 +1,51 @@
+<div class="breadCrumb">
+    Return to <a href="/account">Account Management</a>
+</div>
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+
+                    <h2>User Roles</h2>
+                    <a href="/account/add-role">Add New</a>
+
+                    <% if (roles && roles.length> 0) { %>
+                        <table class="stripedTable">
+                            <thead>
+                                <tr>
+                                    <th>Role Id</th>
+                                    <th>Role Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% roles.forEach(role=> { %>
+                                    <tr>
+
+                                        <td>
+                                            <%= role.role_id %>
+                                        </td>
+                                        <td>
+                                            <%= role.role_name %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                            <p>No roles found.</p>
+                            <% } %>

@@ -1,0 +1,41 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <!-- message -->
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+                    <h2>Update Role Type</h2>
+
+                    <div class="borderBox">
+                        <form id="updateTypeForm" action="/account/update-user-role" method="post">
+                            <div class="formItem">
+                                Name: <%- account_firstname %> <%- account_lastname %>
+                            </div>
+                            <div class="formItem">
+                                Email: <%- account_email %>
+                            </div>
+                            <div class="formItem">
+                                <label for="roleList">Role:</label>
+                                <%- roleList %>
+                            </div>
+                            <input type="hidden" name="account_id" value="<%= account_id %>">
+
+                            <div class="formButton">
+                                <button type="submit">Update Role</button>
+                                <a href="/account/user-management">Cancel</a>
+                            </div>
+                        </form>
+                    </div>

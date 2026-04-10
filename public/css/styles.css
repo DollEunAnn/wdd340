@@ -287,10 +287,10 @@ select {
 .borderBox {
   max-width: 400px;
   border: var(--border) solid 0.5px;
-  background-color: var(--main-accent);
+  background-color: #97d0f7e8;
   border-radius: 10px;
   padding: 1em;
-  margin:0 auto;
+  margin-bottom: 20px;
 }
 
 .textItalic {
@@ -325,6 +325,63 @@ textarea:focus:valid {
 
 textarea {
   min-height: 200px;
+}
+
+/* Table */
+.stripedTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  margin-top: 1rem;
+}
+
+/* Header */
+.stripedTable thead {
+  background-color: #333;
+  color: #fff;
+}
+
+.stripedTable th,
+.stripedTable td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+/* Zebra stripes */
+.stripedTable tbody tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+.stripedTable tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* Hover effect */
+.stripedTable tbody tr:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+/* Borders */
+.stripedTable th,
+.stripedTable td {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Link styling */
+.stripedTable a {
+  color: #6a0dad;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.stripedTable a:hover {
+  text-decoration: underline;
+}
+
+.breadCrumb {
+  margin-top: 10px;
+  padding: 10px;
 }
 
 @media only screen and (min-width: 45rem) {

@@ -29,8 +29,7 @@
                         </a>
                     </p>
 
-                    <% if ( locals.accountData.account_type==="Employee" || locals.accountData.account_type==="Admin" )
-                        { %>
+                    <% if ( locals.accountData.role_id===2 || locals.accountData.role_id===3 ) { %>
                         <div class="borderBox">
 
                             <h3>Inventory Management</h3>
@@ -43,3 +42,33 @@
                         </div>
 
                         <% } %>
+
+
+                            <% if ( locals.accountData.role_id===3 ) { %>
+
+                                <div class="borderBox">
+                                    <h3>User Management</h3>
+
+                                    <p>
+                                        <a href="/account/user-management">
+                                            Manage Users
+                                        </a>
+                                    </p>
+                                </div>
+
+                                <% } %>
+
+
+                                    <% if ( locals.accountData.role_id===3 ) { %>
+
+                                        <div class="borderBox">
+                                            <h3>Role Management</h3>
+
+                                            <p>
+                                                <a href="/account/role-management">
+                                                    Manage Roles
+                                                </a>
+                                            </p>
+                                        </div>
+
+                                        <% } %>

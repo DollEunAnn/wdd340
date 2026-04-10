@@ -141,6 +141,7 @@ async function buildUpdateAccountView(req, res, next) {
   let nav = await utilities.getNav()
   const account_id = parseInt(req.params.accountId)
   const accountData = await accountModel.getAccountById(account_id)
+  console.log("Account ID from params is: " + accountData)
   
   if (!accountData) {
     req.flash("notice", "Sorry, we couldn't find the account.")
@@ -248,5 +249,137 @@ async function accountLogout(req, res) {
   res.redirect("/")
 }
 
+// USER MANAGEMENT VIEW
+/*******************************************
+ * User management view for admin accounts
+ *******************************************/
+async function buildUserManagementView(req, res) {
+  let nav = await utilities.getNav()  
+  const users = await accountModel.getAllUsers()
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateAccountView, updateAccountDetails, updateAccountPassword, accountLogout }
+  res.render("account/user-management", {
+    title: "User Management",
+    nav,
+    users,
+    errors: null,
+  })
+}
+
+async function buildUpdateRoleView(req, res) {
+  let nav = await utilities.getNav()
+  const account_id = parseInt(req.params.accountId)
+  const accountData = await accountModel.getAccountById(account_id)
+  const roleList = await utilities.buildRoleList(accountData.role_id)
+
+  if (!accountData) {
+    req.flash("notice", "Sorry, we couldn't find the account.")
+    return res.redirect("/account/")
+  }
+
+  res.render("account/update-user-role", {
+    title: "Update Account Type",
+    nav,
+    errors: null,
+    roleList,
+    account_id,
+    role_id: accountData.role_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+    account_role_id: accountData.role_id,
+  })
+}
+
+async function updateUserRole(req, res) {
+  const { account_id, role_id } = req.body
+  let nav = await utilities.getNav()
+  
+  const accountData = await accountModel.getAccountById(account_id);
+  
+  // data validation
+  if (!accountData) {
+    req.flash("notice", "Account not found.")
+    return res.redirect("/account/user-management")
+  }
+  
+  if (accountData.role_id === role_id) {
+    req.flash("notice", "Role is already assigned.")
+    return res.redirect("/account/user-management")
+  }
+  
+  const updateResult = await accountModel.updateRole(account_id, role_id);
+  const users = await accountModel.getAllUsers()
+
+  if(updateResult) {
+    req.flash("notice", `${accountData.account_firstname} ${accountData.account_lastname} role was updated successfully.`)
+    res.status(201).render("./account/user-management", {
+      errors: null,
+      title: "User Management",
+      nav,
+      users
+    })
+  } else {
+    req.flash("notice", "Sorry, there was an error updating the role.")
+    res.status(501).render("/account/update-user-role/",{
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+
+  }
+}
+
+// Role Management
+async function buildRoleManagementView (req, res) {
+  let nav = await utilities.getNav();
+  const roles = await accountModel.getAllRoles()
+
+  res.render("account/role-management", {
+    title: "Role Management",
+    nav,
+    errors:null,
+    roles,
+  })
+}
+
+async function buildAddRoleView (req, res) {
+  let nav = await utilities.getNav();
+   res.render("account/add-role", {
+    title: "Role Management",
+    nav,
+    errors:null,
+  })
+}
+
+async function addRole (req,res) {
+  const { role_name } = req.body
+  let nav = await utilities.getNav()
+
+  const updateResult = await accountModel.addRole(role_name)
+  const roles = await accountModel.getAllRoles()
+
+  
+  if(updateResult) { //successful - working
+    req.flash("notice", `Role "${role_name}" added successfully.`)
+    res.status(201).render("account/role-management", {
+      roles,
+      errors: null,
+      title: "Role Management",
+      nav,
+    })
+  } else { // error not working
+    const roles = await accountModel.getAllRoles()
+    req.flash("notice", "Sorry, there was an error adding the role.")
+    res.status(501).render("account/add-role",{
+      roles,
+      title: "Add Role",
+      nav,
+      errors,
+      role_name,
+    })
+
+  }
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateAccountView, updateAccountDetails, updateAccountPassword, accountLogout, buildUserManagementView, buildUpdateRoleView, updateUserRole, buildRoleManagementView, buildAddRoleView, addRole }

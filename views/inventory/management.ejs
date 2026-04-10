@@ -1,4 +1,6 @@
-<!-- Inventory Management - heading, message, inventory -->
+<div class="breadCrumb">
+    Return to <a href="/account">Account Management</a>
+</div>
 <% if (title) { %>
     <h1>
         <%= title %>
@@ -21,7 +23,7 @@
             <%- classificationSelect %>
 
                 <!-- table -->
-                <table id="inventoryDisplay"></table>
+                <table id="inventoryDisplay" class="stripedTable"></table>
 
                 <noscript>JavaScript must be enabled to use this page.</noscript>
 
