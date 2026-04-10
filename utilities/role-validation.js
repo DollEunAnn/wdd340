@@ -6,8 +6,8 @@ validate.roleRules = () => {
   return [
     body("role_name")
       .trim()
-      .notEmpty()
-      .isLength({ min: 3 })
+      .notEmpty().withMessage("Cannot save empty")
+      .isLength({ min: 3 }).withMessage("Minimum of 3 characters.")
       .matches(/^[A-Za-z\s'-]+$/)
       .escape()
       .withMessage("Please type a valid role name"),
@@ -21,7 +21,7 @@ validate.checkRoleData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
 
-    return res.render("account/role-management", {
+    return res.render("account/add-role", {
       errors,
       title: "Add New Role",
       nav,

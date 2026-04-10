@@ -357,8 +357,9 @@ async function addRole (req,res) {
 
   const updateResult = await accountModel.addRole(role_name)
   const roles = await accountModel.getAllRoles()
+
   
-  if(updateResult) {
+  if(updateResult) { //successful - working
     req.flash("notice", `Role "${role_name}" added successfully.`)
     res.status(201).render("account/role-management", {
       roles,
@@ -366,13 +367,14 @@ async function addRole (req,res) {
       title: "Role Management",
       nav,
     })
-  } else {
+  } else { // error not working
+    const roles = await accountModel.getAllRoles()
     req.flash("notice", "Sorry, there was an error adding the role.")
     res.status(501).render("account/add-role",{
       roles,
       title: "Add Role",
       nav,
-      errors: null,
+      errors,
       role_name,
     })
 
